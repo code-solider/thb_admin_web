@@ -1,4 +1,11 @@
-import { queryRule, removeRule, addRule, updateRule, getUserDataById, updateUserDataById } from '@/services/api';
+import {
+  queryRule,
+  removeRule,
+  addRule,
+  updateRule,
+  getUserDataById,
+  updateUserDataById,
+} from '@/services/api';
 
 export default {
   namespace: 'rule',
@@ -8,7 +15,7 @@ export default {
       list: [],
       pagination: {},
     },
-    userById:{}
+    userById: {},
   },
 
   effects: {
@@ -19,7 +26,7 @@ export default {
         payload: response,
       });
     },
-    *getOneUserById({ payload }, { call, put }){
+    *getOneUserById({ payload }, { call, put }) {
       const response = yield call(getUserDataById, payload);
       yield put({
         type: 'updateUserData',
@@ -50,14 +57,18 @@ export default {
       });
       if (callback) callback();
     },
-    *updateUserById({ payload, callback }, { call, put }){
+    *updateUserById({ payload, callback }, { call, put }) {
       const response = yield call(updateUserDataById, payload);
       yield put({
         type: 'updateUserByIdR',
         payload: response,
       });
       if (callback) callback();
-    }
+    },
+    *downData({ payload, callback }, { call, put }) {
+      const response = yield call(queryRule, payload);
+      callback(response.list);
+    },
   },
 
   reducers: {
@@ -67,28 +78,28 @@ export default {
         data: action.payload,
       };
     },
-    updateUserData(state, action){
+    updateUserData(state, action) {
       return {
         ...state,
         userById: action.payload,
       };
     },
-    updateUserByIdR(state,{payload}){
-      let newData = state.data.list.map((item)=>{
-        if(item._id+''===payload._id+''){
-          return payload
-        }else{
-          return item
+    updateUserByIdR(state, { payload }) {
+      let newData = state.data.list.map(item => {
+        if (item._id + '' === payload._id + '') {
+          return payload;
+        } else {
+          return item;
         }
-      })
+      });
       return {
         ...state,
-        userById:{},
+        userById: {},
         data: {
           list: [...newData],
           pagination: state.data.pagination,
-        }
+        },
       };
-    }
+    },
   },
 };

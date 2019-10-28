@@ -109,10 +109,13 @@ class DrawereComponent extends Component {
   };
 
   onChange = (value, arg2) => {
-    const { dispatch, company: { companyDrawerData } } = this.props;
+    const {
+      dispatch,
+      company: { companyDrawerData },
+    } = this.props;
     if (arg2 && arg2 === 2) {
       if (value.length > 5) {
-        message.error('最多选择5个', 1.5)
+        message.error('最多选择5个', 1.5);
         return false;
       } else {
         dispatch({
@@ -120,18 +123,17 @@ class DrawereComponent extends Component {
           payload: {
             companyDrawerData: {
               ...companyDrawerData,
-              yewu2: value
-            }
-          }
-        })
+              yewu2: value,
+            },
+          },
+        });
         // this.setState({
         //   yewu2: value,
         // });
       }
-
     } else if (arg2 && arg2 === 3) {
       if (value.length > 3) {
-        message.error('最多选择3个', 1.5)
+        message.error('最多选择3个', 1.5);
         return false;
       } else {
         dispatch({
@@ -139,14 +141,14 @@ class DrawereComponent extends Component {
           payload: {
             companyDrawerData: {
               ...companyDrawerData,
-              yewu3: value
-            }
-          }
-        })
+              yewu3: value,
+            },
+          },
+        });
       }
     } else {
       if (value.length > 1) {
-        message.error('最多选择1个', 1.5)
+        message.error('最多选择1个', 1.5);
         return false;
       } else {
         dispatch({
@@ -154,14 +156,12 @@ class DrawereComponent extends Component {
           payload: {
             companyDrawerData: {
               ...companyDrawerData,
-              yewu: value
-            }
-
-          }
-        })
+              yewu: value,
+            },
+          },
+        });
       }
     }
-
   };
 
   render() {
@@ -203,7 +203,6 @@ class DrawereComponent extends Component {
       { label: '企业信贷', value: '企业信贷' },
       { label: '企业资产抵押贷', value: '企业资产抵押贷' },
     ];
-    console.log(companyDrawerData.yewu, 'companyDrawerData.yewu')
     return (
       <Drawer
         title="更新公司信息"
@@ -263,10 +262,18 @@ class DrawereComponent extends Component {
           <Row gutter={16}>
             <Col span={24}>
               <Form.Item label="主营业务">
-                <Checkbox.Group options={options} value={companyDrawerData.yewu} onChange={this.onChange} />
+                <Checkbox.Group
+                  options={options}
+                  value={companyDrawerData.yewu}
+                  onChange={this.onChange}
+                />
               </Form.Item>
               <Form.Item label="次营业务">
-                <Checkbox.Group options={yewuOptions} value={companyDrawerData.yewu2} onChange={(e) => this.onChange(e, 2)} />
+                <Checkbox.Group
+                  options={yewuOptions}
+                  value={companyDrawerData.yewu2}
+                  onChange={e => this.onChange(e, 2)}
+                />
               </Form.Item>
               {/* <Form.Item label="其他业务">
                 <Checkbox.Group options={options} value={companyDrawerData.yewu3} onChange={(e) => this.onChange(e, 3)} />
